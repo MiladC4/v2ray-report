@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>گزارش مصرف تونل</title>
+<style>
+ body{font-family:Tahoma,Arial,sans-serif;background:#0f1420;color:#e6e9f0;margin:0;padding:18px}
+ h1{font-size:20px;margin:0 0 6px} h2{font-size:17px;margin:26px 0 8px;color:#8fd0ff}
+ .meta{color:#9aa4b8;font-size:13px;margin-bottom:14px}
+ table{width:100%;border-collapse:collapse;font-size:14px;background:#161d2e;border-radius:8px;overflow:hidden}
+ th,td{padding:8px 10px;border-bottom:1px solid #232c44;text-align:right;white-space:nowrap}
+ th{background:#1d2740;color:#bcd0f5;cursor:pointer;user-select:none;position:sticky;top:0}
+ th:hover{background:#26345a}
+ tr:hover td{background:#1a2340}
+ .num{text-align:left;direction:ltr}
+ .bad{color:#ff8a8a}.good{color:#7ee2a8}
+ .cards{display:flex;flex-wrap:wrap;gap:12px}
+ .card{background:#161d2e;border:1px solid #232c44;border-radius:10px;padding:12px 16px;min-width:230px}
+ .card b{display:block;font-size:13px;color:#8fd0ff;margin-bottom:6px}
+ .card .big{font-size:18px;direction:ltr;text-align:right}
+ .card .sub{color:#9aa4b8;font-size:12px;margin-top:4px}
+ .pager{display:flex;gap:6px;margin:8px 0 0;flex-wrap:wrap}
+ .pager button{background:#1d2740;color:#e6e9f0;border:1px solid #2b3557;border-radius:6px;padding:5px 11px;cursor:pointer}
+ .pager button.on{background:#2f6fd0;border-color:#2f6fd0}
+ .pager button:disabled{opacity:.4;cursor:default}
+ .hint{color:#7c87a0;font-size:12px;margin-top:4px}
+ .sites{margin-bottom:8px}
+</style>
+</head>
+<body>
+<h1>گزارش مصرف تونل</h1>
+<div class="meta">تولید: 2026-10-07 10:21:19 &nbsp;|&nbsp; منبع: آمار xray + لاگ دسترسی</div>
+
+<h2>مصرف کل هر کانفیگ</h2>
+<table><thead><tr>
+ <th data-k="label">کانفیگ</th><th data-k="port" class="num">پورت</th>
+ <th data-k="cum_down" class="num">دانلود (کل)</th><th data-k="cum_up" class="num">آپلود (کل)</th>
+ <th data-k="cum_total" class="num">حجم کل</th>
+ <th data-k="sites_count" class="num">تعداد سایت</th><th data-k="visits" class="num">تعداد ورود</th>
+</tr></thead><tbody id="sum"></tbody></table>
+
+<div id="sections"></div>
+<div class="hint">حجم سایت‌ها از نمونه‌برداری هر ۲ ثانیه روی اتصال‌های xray به‌دست می‌آید (اتصال‌های خیلی کوتاه ممکن است اندکی کمتر ثبت شوند). «ورود» = هر بار برقراری اتصال به آن سایت.</div>
+
+<script>
+const DATA = {"generated": "2026-10-07 10:21:19", "configs": [{"tag": "vmess-1", "label": "کانفیگ ۱ — پورت 20053", "port": 20053, "email": "user1@vps", "cur_up": 480626, "cur_down": 486650753, "cum_up": 961252, "cum_down": 973301506, "sites_count": 56, "visits": 142, "sites": [{"site": "127.0.0.1", "visits": 3, "up": 86, "down": 83886287, "total": 83886373, "last3": ["6-10-07 10:12", "6-10-07 10:11", "6-10-07 09:40"]}, {"site": "10.10.34.36", "visits": 7, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32", "6-10-07 09:32", "6-10-07 09:32"]}, {"site": "104.16.3.81", "visits": 3, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "104.17.222.114", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33"]}, {"site": "108.156.22.87", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "108.177.14.100", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:32"]}, {"site": "108.177.14.113", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "108.177.14.138", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32", "6-10-07 08:56"]}, {"site": "108.177.14.188", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "142.251.151.119", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32", "6-10-07 09:32"]}, {"site": "142.251.152.119", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "142.251.154.119", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "142.251.156.119", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "142.251.157.119", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56", "6-10-07 08:56"]}, {"site": "147.135.128.113", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "147.135.128.236", "visits": 4, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "157.240.205.1", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56", "6-10-07 08:56"]}, {"site": "157.240.205.11", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "157.240.205.35", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56", "6-10-07 08:56"]}, {"site": "157.240.205.36", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56", "6-10-07 08:56"]}, {"site": "157.240.205.40", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 08:56"]}, {"site": "157.240.30.55", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "162.159.142.241", "visits": 3, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "172.217.114.4", "visits": 3, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 08:56"]}, {"site": "172.217.119.4", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "172.253.152.97", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 08:56"]}, {"site": "172.66.2.237", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "173.194.220.94", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "173.194.221.95", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33"]}, {"site": "185.207.236.45", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "185.76.9.4", "visits": 4, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "185.76.9.5", "visits": 8, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "209.85.233.188", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32"]}, {"site": "212.41.11.107", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "216.58.198.194", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32", "6-10-07 09:32"]}, {"site": "216.58.201.2", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "217.177.54.1", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "3.164.68.71", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33"]}, {"site": "31.220.27.135", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "43.98.196.187", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32"]}, {"site": "45.133.44.18", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "45.133.44.70", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "45.133.44.71", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33"]}, {"site": "45.144.148.184", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "47.84.48.225", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "57.144.253.33", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32"]}, {"site": "64.233.161.101", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "64.233.161.84", "visits": 4, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "64.233.163.102", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32"]}, {"site": "64.233.164.102", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33"]}, {"site": "64.233.164.94", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "64.233.164.95", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:32"]}, {"site": "8.8.8.8", "visits": 22, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "82.39.165.158", "visits": 11, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:32", "6-10-07 09:32"]}, {"site": "92.246.95.227", "visits": 7, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:33", "6-10-07 09:33", "6-10-07 09:33"]}, {"site": "speed.cloudflare.com", "visits": 6, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:39", "6-10-07 09:38", "6-10-07 09:37"]}]}, {"tag": "vmess-2", "label": "کانفیگ ۲ — پورت 20054", "port": 20054, "email": "user2@vps", "cur_up": 2908, "cur_down": 687099, "cum_up": 5816, "cum_down": 1374198, "sites_count": 20, "visits": 36, "sites": [{"site": "108.177.14.101", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57", "6-10-07 08:57"]}, {"site": "108.177.14.138", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "108.177.14.188", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "142.251.153.119", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57"]}, {"site": "157.240.205.1", "visits": 4, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57", "6-10-07 08:57", "6-10-07 08:57"]}, {"site": "157.240.205.11", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57"]}, {"site": "157.240.205.35", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57"]}, {"site": "157.240.205.36", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57", "6-10-07 08:57"]}, {"site": "157.240.205.40", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "157.240.210.61", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "172.217.115.4", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57", "6-10-07 08:56"]}, {"site": "172.253.152.97", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57"]}, {"site": "216.58.201.2", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "57.144.253.33", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "8.222.185.93", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56"]}, {"site": "8.8.4.4", "visits": 7, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57", "6-10-07 08:57", "6-10-07 08:56"]}, {"site": "8.8.8.8", "visits": 4, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:56", "6-10-07 08:56", "6-10-07 08:56"]}, {"site": "82.39.165.158", "visits": 2, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 08:57", "6-10-07 08:56"]}, {"site": "github.com", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:36"]}, {"site": "www.wikipedia.org", "visits": 1, "up": 0, "down": 0, "total": 0, "last3": ["6-10-07 09:36"]}]}]};
+const nf = new Intl.NumberFormat('fa-IR');
+function fmt(b){ if(b==null) return '0 B'; const u=['B','KB','MB','GB','TB']; let i=0,n=b;
+ while(n>=1024&&i<u.length-1){n/=1024;i++;} return (i?n.toFixed(1):Math.round(n))+' '+u[i]; }
+
+function sortRows(rows, key, dir){
+  return rows.slice().sort((a,b)=>{
+    let x=a[key], y=b[key];
+    if(typeof x==='string'){ return dir*(x.localeCompare(y,'fa')); }
+    return dir*((x||0)-(y||0));
+  });
+}
+
+// summary table
+(function(){
+  const rows = DATA.configs.map(c=>Object.assign({}, c,
+     {cum_total: c.cum_up + c.cum_down}));
+  renderTable(document.getElementById('sum'), rows,
+    [{k:'label',f:v=>v},{k:'port',f:v=>nf.format(v),num:1},
+     {k:'cum_down',f:fmt,num:1},{k:'cum_up',f:fmt,num:1},{k:'cum_total',f:fmt,num:1},
+     {k:'sites_count',f:v=>nf.format(v),num:1},{k:'visits',f:v=>nf.format(v),num:1}], 'cum_total', -1);
+})();
+
+// per-config sites tables (20 per page, sortable headers)
+const PAGE=20;
+DATA.configs.forEach((cfg, idx)=>{
+  const h=document.createElement('h2');
+  h.innerHTML = cfg.label + ' — حجم کل: <span class="good">'+fmt(cfg.cum_up+cfg.cum_down)+'</span>'
+    + ' &nbsp;|&nbsp; سایت‌ها: '+nf.format(cfg.sites_count)
+    + ' &nbsp;|&nbsp; ورودها: '+nf.format(cfg.visits);
+  document.getElementById('sections').appendChild(h);
+
+  const wrap=document.createElement('div'); wrap.className='sites';
+  const tid='t'+idx;
+  wrap.innerHTML='<table id="'+tid+'"><thead><tr>'
+    + '<th data-k="site">نام دامنه</th>'
+    + '<th data-k="visits" class="num">تعداد ورود</th>'
+    + '<th data-k="total" class="num">حجم مصرفی</th>'
+    + '<th data-k="down" class="num">دانلود</th>'
+    + '<th data-k="up" class="num">آپلود</th>'
+    + '<th data-k="last">سه آخرین ورود</th>'
+    + '</tr></thead><tbody></tbody></table>'
+    + '<div class="pager" id="p'+idx+'"></div>';
+  document.getElementById('sections').appendChild(wrap);
+
+  let page=1, skey='total', sdir=-1;
+  function draw(){
+    const rows=sortRows(cfg.sites, skey, sdir);
+    const pages=Math.max(1, Math.ceil(rows.length/PAGE));
+    if(page>pages) page=pages;
+    const slice=rows.slice((page-1)*PAGE, page*PAGE);
+    const tb=wrap.querySelector('tbody');
+    tb.innerHTML = slice.map((r,i)=>'<tr>'
+      + '<td>'+esc(r.site)+'</td>'
+      + '<td class="num">'+nf.format(r.visits)+'</td>'
+      + '<td class="num">'+fmt(r.total)+'</td>'
+      + '<td class="num">'+fmt(r.down)+'</td>'
+      + '<td class="num">'+fmt(r.up)+'</td>'
+      + '<td style="white-space:normal;color:#9aa4b8;font-size:12px">'+(r.last3.join(' ، ')||'—')+'</td>'
+      + '</tr>').join('') || '<tr><td colspan="6">داده‌ای ثبت نشده</td></tr>';
+    // pager
+    const p=document.getElementById('p'+idx);
+    let html='<button '+(page<=1?'disabled':'')+' data-g="'+(page-1)+'">قبلی</button>';
+    const win=[];
+    for(let i=1;i<=pages;i++){ if(i<=3||i>pages-2||Math.abs(i-page)<=2) win.push(i); }
+    let last=0;
+    win.forEach(i=>{ if(last && i-last>1) html+='<span style="color:#7c87a0">…</span>';
+      html+='<button class="'+(i===page?'on':'')+'" data-g="'+i+'">'+nf.format(i)+'</button>'; last=i; });
+    html+='<button '+(page>=pages?'disabled':'')+' data-g="'+(page+1)+'">بعدی</button>';
+    html+='<span style="color:#7c87a0;align-self:center">صفحه '+nf.format(page)+' از '+nf.format(pages)+'</span>';
+    p.innerHTML=html;
+    p.querySelectorAll('button').forEach(b=>b.onclick=()=>{ page=+b.dataset.g; draw(); });
+    wrap.querySelectorAll('th').forEach(th=>{
+      const k=th.dataset.k; if(k==='last') return;
+      th.textContent = th.textContent.replace(/ [▲▼]$/,'');
+      if(k===skey) th.textContent += (sdir<0?' ▼':' ▲');
+      th.onclick=()=>{ if(k==='last') return; if(skey===k) sdir=-sdir; else {skey=k; sdir=-1;} draw(); };
+    });
+  }
+  draw();
+});
+
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderTable(tbl, rows, cols, initKey, initDir){
+  let key=initKey, dir=initDir;
+  const tb=tbl.querySelector('tbody');
+  function draw(){
+    const sorted=sortRows(rows, key, dir);
+    tb.innerHTML = sorted.map(r=>'<tr>'+cols.map(c=>
+      '<td class="'+(c.num?'num':'')+'">'+c.f(r[c.k])+'</td>').join('')+'</tr>').join('');
+    tbl.querySelectorAll('th').forEach(th=>{
+      th.textContent = th.textContent.replace(/ [▲▼]$/,'');
+      if(th.dataset.k===key) th.textContent += (dir<0?' ▼':' ▲');
+      th.onclick=()=>{ if(th.dataset.k===key) dir=-dir; else {key=th.dataset.k; dir=-1;} draw(); };
+    });
+  }
+  draw();
+}
+</script>
+</body>
+</html>
